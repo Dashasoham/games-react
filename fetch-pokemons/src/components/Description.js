@@ -1,91 +1,65 @@
-// import { Button } from 'bootstrap';
-import { useState } from 'react';
-// import { Button } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-
-// const data = [
-//   { name: 'Anom', age: 19, gender: 'Male' },
-//   { name: 'Megha', age: 19, gender: 'Female' },
-//   { name: 'Subham', age: 25, gender: 'Male' },
-// ];
+import useDescription from '../hooks/useDescription';
 
 function Description() {
-  const [apiData, setApiData] = useState({});
-  //   const [breedId, setBreedId] = useState('');
-
-  //   const [isLoading, setIsLoading] = useState(false);
-
-  const fetchData = (breedId) => {
-    // setBreedId(breedId);
-
-    // setIsLoading(true);
-
-    let options = {
-      method: 'GET',
-      headers: {
-        'x-api-key':
-          'live_wNK7FwbRhxA1N3LrcVBZac6rXeyLaRHiNznaxMEX6XUj7AygBg8V1W4p8Cdq4Z9x',
-      },
-    };
-
-    let url = `https://api.thecatapi.com/v1/images/search?breed_id=${breedId}`;
-
-    fetch(url, options)
-      .then((res) => res.json()) // parse response as JSON
-      .then((data) => {
-        console.log(data);
-        setApiData(data);
-        // setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(`error ${err}`);
-        // setIsLoading(false);
-      });
-  };
+  const { apiData, fetchData } = useDescription();
 
   return (
     <div className='d-flex justify-content-center'>
-      {/* <button onClick={fetchData}>Click</button> */}
       <tbody>
-        <table>
-          <thead>
-            <tr>
-              <th>
-                {' '}
-                <Button onClick={() => fetchData('siam')} breedId='siam'>
-                  Siamese
-                </Button>
-              </th>
-              <th>
-                {' '}
-                <Button onClick={fetchData} />
-              </th>
-              <th>
-                {' '}
-                <Button onClick={fetchData} />
-              </th>
-            </tr>
-          </thead>
-        </table>
-
+        <Button
+          onClick={() => fetchData('siam')}
+          breedId='siam'
+          className='m-2'
+        >
+          Siamese
+        </Button>
+        <Button
+          onClick={() => fetchData('munc')}
+          breedId='munc'
+          className='m-2'
+        >
+          Munchkin
+        </Button>
+        <Button
+          onClick={() => fetchData('pixi')}
+          breedId='pixi'
+          className='m-2'
+        >
+          Pixie-bob
+        </Button>{' '}
         {/* {isLoading ? (
         <p>Loading...</p>
       ) : ( */}
-        <table>
+        <div>
+          {apiData.length > 0 && apiData[0].url ? (
+            <img
+              src={apiData[0].url}
+              alt='cat'
+              style={{ width: '60%', height: '60%' }}
+            />
+          ) : (
+            <div colSpan='3'>No image available</div>
+          )}
+        </div>
+        <table
+          className='table table-bordered mt-5'
+          style={{ width: '800px', margin: '0 auto' }}
+        >
           <thead>
             <tr>
               <th>Breed</th>
               <th>Origin</th>
               <th>Description</th>
             </tr>
-          </thead>
-          <tbody>
+
             {apiData && apiData.length > 0 ? (
               apiData.map((item, key) => (
                 <tr key={key}>
-                  <td>{item.url}</td>
-                  <td>{item.width}</td>
-                  <td>{item.height}</td>
+                  <td>{item.breeds[0].name}</td>
+
+                  <td>{item.breeds[0].origin}</td>
+                  <td>{item.breeds[0].description}</td>
                 </tr>
               ))
             ) : (
@@ -93,10 +67,9 @@ function Description() {
                 <td colSpan='3'>No data available</td>
               </tr>
             )}
-          </tbody>
+          </thead>
         </table>
       </tbody>
-      {/* )} */}
     </div>
   );
 }
