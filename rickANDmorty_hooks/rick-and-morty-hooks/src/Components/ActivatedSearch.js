@@ -58,13 +58,13 @@ const ActivatedSearch = () => {
       ></input>
       <button
         onClick={onClickSearch}
-        className='bg-transparent hover:bg-blue-500  font-semibold hover:text-white py-3 px-4 ml-2 border-4 hover:border-transparent rounded-xl'
+        className='bg-transparent hover:bg-green-600  font-semibold hover:text-white py-3 px-4 ml-2 border-4 hover:border-transparent rounded-xl'
       >
         Search
       </button>
       <button
         onClick={onClickRandom}
-        className='bg-transparent hover:bg-blue-500  font-semibold hover:text-white py-3 px-4 ml-2 border-4 hover:border-transparent rounded-xl'
+        className='bg-transparent hover:bg-green-500  font-semibold hover:text-white py-3 px-4 ml-2 border-4 hover:border-transparent rounded-xl'
       >
         Random
       </button>
